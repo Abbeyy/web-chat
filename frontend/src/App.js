@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import TitleBar from './component/TitleBar';
 import MessageList from './component/MessageList';
+import UserGeneration from './component/UserGeneration';
 import ChatBox from './component/ChatBox';
 
 class App extends React.Component {
@@ -13,8 +14,9 @@ class App extends React.Component {
         return(
             <div>
                 <TitleBar></TitleBar>
-                <MessageList></MessageList>
-                <ChatBox></ChatBox>
+                {/*<MessageList></MessageList>*/}
+                {/*<UserGeneration></UserGeneration>*/}
+                {/*<ChatBox></ChatBox>*/}
             </div>
         );
     }
