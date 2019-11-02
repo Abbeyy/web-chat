@@ -1,13 +1,19 @@
 import React from 'react';
-// import ChatBox from './component/ChatBox';
+import ChatBox from './ChatBox';
 import '../resources/sappo.css';
 
 class Users extends React.Component {
     state = {
         fetched: false,
         users: null, //get existing users from db,
-        name: null
+        name: null,
+        showChat: false
     };
+
+    constructor(props) {
+        super(props);
+        this.showChat = this.showChat.bind(this);
+    }
 
     componentDidMount() {
         //get users from database.
@@ -30,24 +36,30 @@ class Users extends React.Component {
         return (userList);
     }
 
+    showChat() {
+        this.setState({showChat: true});
+    }
+
     render() {
         return(
             <div>
-                {this.state.fetched ?
-                    <div>
-                        <ul>
-                            {this.state.users ? this.listUsers() : <li>No users yet</li>}
-                        </ul>
-                        <br></br>
-                        <p>Your username is: </p>
-                        {this.state.name ?
+                {this.state.showChat
+                    ? <ChatBox></ChatBox>
+                    : this.state.fetched ?
                             <div>
-                                <p>{this.state.name}</p>
-                                <button>Enter chatroom</button>
+                                <ul>
+                                    {this.state.users ? this.listUsers() : <li>No users yet</li>}
+                                </ul>
+                                <br></br>
+                                <p>Your username is: </p>
+                                {this.state.name ?
+                                    <div>
+                                        <p>{this.state.name}</p>
+                                        <button onClick={this.showChat}>Enter chatroom</button>
+                                    </div>
+                                    : <p>"name not gathered yet"</p>}
                             </div>
-                            : <p>"name not gathered yet"</p>}
-                    </div>
-                    : <div>fetching names</div>}
+                            : <div>fetching names</div>}
             </div>
 
         );
