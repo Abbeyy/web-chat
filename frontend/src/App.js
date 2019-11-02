@@ -3,8 +3,7 @@ import axios from 'axios';
 
 import TitleBar from './component/TitleBar';
 import MessageList from './component/MessageList';
-import UserGeneration from './component/UserGeneration';
-import ChatBox from './component/ChatBox';
+import Users from './component/UserGeneration';
 
 class App extends React.Component {
     //Create state values
@@ -15,8 +14,7 @@ class App extends React.Component {
             <div>
                 <TitleBar></TitleBar>
                 {/*<MessageList></MessageList>*/}
-                {/*<UserGeneration></UserGeneration>*/}
-                {/*<ChatBox></ChatBox>*/}
+                <Users ></Users>
             </div>
         );
     }
