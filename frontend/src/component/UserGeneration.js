@@ -101,13 +101,13 @@ class Users extends React.Component {
                                     {this.state.users ? this.listUsers() : <li>No users yet</li>}
                                 </ul>
                                 <br></br>
-                                <p>Your username is: </p>
+                                <p className="users-text">Your username is: </p>
                                 {this.state.name ?
-                                    <div>
+                                    <div className="username">
                                         <p>{this.state.name}</p>
-                                        <button onClick={this.showChat}>Enter chatroom</button>
+                                        <button onClick={this.showChat} className="chatroom-button">Enter Chatroom!</button>
                                     </div>
-                                    : <p>"name not gathered yet"</p>}
+                                    : <p className="users-text">"name not gathered yet"</p>}
                             </div>
                             : <div>fetching names</div>}
             </div>

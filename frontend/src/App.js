@@ -21,7 +21,7 @@ class App extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="page">
                 {/*<p>{this.state.timestamp}</p>*/}
                 <TitleBar></TitleBar>
                 {/*<MessageList></MessageList>*/}

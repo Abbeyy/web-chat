@@ -1,14 +1,76 @@
+/*Basic html css*/
+body {
+    font-family: Helvetica,Arial,freesans,sans-serif;
+    font-size: 95%;
+    max-width: 100%;
+    display: block;
+    margin: 0px !important;
+}
+
+root {
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    display: block;
+}
+
+/*App.js css*/
+
+.page {
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    display: block;
+}
+
 /*TitleBar.js css*/
-.rotate90 {
+.logo {
+    float: left;
     transform: rotate(90deg);
     height: 120px;
     width: 150px;
 }
 
 .app-title {
+    float: left;
+    color: white;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 45px;
+}
 
+.rotate90 {
+    transform: rotate(90deg);
+    height: 120px;
+    width: 150px;
 }
 
 .title-bar {
+    background-color: #4CAF50;
+    display: inline-block;
+    width: 100%;
+    border-color: blue;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    height: 135px;
+}
 
+/*UserGeneration.js css*/
+.users-text {
+    text-align: center;
+}
+
+.username {
+    text-align: center;
+    font-weight: bold;
+}
+
+.chatroom-button {
+    font-family: Helvetica,Arial,freesans,sans-serif;
+    font-style: italic;
+    font-weight: bold;
+    background-color: #4CAF50;
+    padding: 15px 32px;
+    color: white;
+    font-size: 18px;
 }
