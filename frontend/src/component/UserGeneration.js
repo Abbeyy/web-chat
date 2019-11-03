@@ -1,5 +1,6 @@
 import React from 'react';
 import ChatBox from './ChatBox';
+import axios from 'axios';
 import '../resources/sappo.css';
 
 class Users extends React.Component {
@@ -7,27 +8,73 @@ class Users extends React.Component {
         fetched: false,
         users: null, //get existing users from db,
         name: null,
-        showChat: false
+        showChat: false,
+        intervalIsSet: false,
+        data: null //all data
     };
 
     constructor(props) {
         super(props);
         this.showChat = this.showChat.bind(this);
+        this.getDataFromDb = this.getDataFromDb.bind(this);
     }
 
     componentDidMount() {
         //get users from database.
-        //mock users for now...
-        this.setState({users: ['Claudia', 'Helene']}, () => {
-            this.setState({fetched: true}, () => {
-                let username = UserGenerator(this.state.users);
-                this.setState({name: username});
-                this.setState(prev => ({
-                    users: [...prev.users, username]
-                }));
-            });
+        this.getDataFromDb(true);
+        if (!this.state.intervalIsSet) {
+            let interval = setInterval(this.getDataFromDb, 1000);
+            this.setState({ intervalIsSet: interval });
+        }
+
+    }
+
+    componentWillUnmount() {
+        if (this.state.intervalIsSet) {
+            clearInterval(this.state.intervalIsSet);
+            this.setState({ intervalIsSet: null });
+        }
+    }
+
+    setRemainingStates = () => {
+        this.setState({fetched: true}, () => {
+            let username = UserGenerator(this.state.users);
+            this.setState({name: username});
         });
     }
+
+    getDataFromDb = (callback) => {
+        fetch('http://localhost:3001/api/getData')
+            .then((data) => data.json())
+            .then((res) => {
+                let usernames = [];
+                res.data.map(item => {
+                    usernames.push(item.user);
+                });
+                if (callback) {
+                    //First-ever call to surrounding function. Ensuring this.state.users is set
+                    //before generating a username that doesnt already exist in this state value.
+                    this.setState({users: usernames}, () => {
+                        this.setRemainingStates();
+                    });
+                } else {
+                    //Used for further interval calls of surrounding function. After first-ever function call.
+                    this.setState({users: usernames});
+                }
+            });
+    };
+
+    putDataToDB = (user) => {
+        axios.post('http://localhost:3001/api/putData', {
+            user: user,
+        })
+            .then(function (response) {
+            console.log(response);
+        })
+            .catch(function (error) {
+                console.log(error);
+            });;
+    };
 
     listUsers() {
         let userList = this.state.users.map((user, i) =>
@@ -37,6 +84,9 @@ class Users extends React.Component {
     }
 
     showChat() {
+        //Update users in database to include this users name.
+        this.putDataToDB(this.state.name);
+        //Now show chat.
         this.setState({showChat: true});
     }
 

@@ -1,17 +1,28 @@
 import React from 'react';
-import axios from 'axios';
 
 import TitleBar from './component/TitleBar';
 import MessageList from './component/MessageList';
 import Users from './component/UserGeneration';
 
+import { subscribeToTimer } from './api';
+
 class App extends React.Component {
     //Create state values
-    state = {};
+    state = {
+        timestamp: 'no timestamp yet'
+    };
+
+    // constructor(props) {
+    //     super(props);
+    //     subscribeToTimer((err, timestamp) => this.setState({
+    //         timestamp
+    //     }));
+    // }
 
     render() {
         return(
             <div>
+                {/*<p>{this.state.timestamp}</p>*/}
                 <TitleBar></TitleBar>
                 {/*<MessageList></MessageList>*/}
                 <Users ></Users>

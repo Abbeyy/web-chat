@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 // this will be our data base's data structure
 const UsersSchema = new Schema(
     {
-        id: Number,
         user: String
     },
     { timestamps: true }
