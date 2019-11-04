@@ -23,10 +23,11 @@ class ChatBox extends React.Component {
     exitChat = () => {
         let objIdToDelete = null;
         this.props.allUsers.forEach((dat) => {
-            if (dat.name == this.state.name) {
+            if (dat.user == this.state.name) {
                 objIdToDelete = dat._id;
             }
         });
+
 
         axios.delete('http://localhost:3001/sappo/deleteData', {
             data: {

@@ -23,7 +23,7 @@ class MessageList extends React.Component {
             .then((res) => {
                 let listItems = res.data.map(item => {
                     return (
-                        <li>
+                        <li className="messages-item" key={item._id}>
                         <p>{item.user} said</p>
                         <br></br>
                         <p>{item.message}</p>
@@ -45,7 +45,7 @@ class MessageList extends React.Component {
         });
 
         return (<div>
-            <ul>
+            <ul className="messages-list">
                 {this.state.messages ?
                     this.state.messages
                     :

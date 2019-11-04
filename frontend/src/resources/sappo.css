@@ -101,3 +101,15 @@ root {
     font-weight: bold;
     font-size: 14px;
 }
+
+/*MessageList.js css*/
+
+.messages-list {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.messages-item {
+    display: inline-block;
+    vertical-align: top;
+}
