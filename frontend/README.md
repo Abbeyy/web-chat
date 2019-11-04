@@ -25,6 +25,12 @@ cd ..
 Ensure you are sat within your sappo folder. Open up a command terminal here. Run the following command:
 npm start
 
+## Justification
+
+HTTP and Websocket:
+I use axios to preform ajax requests because ... [cleaner code - more concise and easily understandable thus maintainable. Less chance of making mistakes first time round]
+I use a websocket to determine when a new message has been submitted to the database, so it can push this change to all clients connected. Logically, I like that the store of messages is updated once, and that there is an entity which registers a change and so pushes this change to all those concerned. [project to justify]
+
 ## Usage
 
 

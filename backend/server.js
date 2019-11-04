@@ -124,6 +124,11 @@ io.on('connection', socket => {
         io.sockets.emit('change color', color);
     });
 
+    socket.on('new message', (msg) => {
+        console.log('New msg is: ', msg);
+        io.sockets.emit('new message', msg);
+    });
+
     socket.on('disconnect', () => {
         console.log('user disconnected');
         // let pos = allClients.indexOf(socket);

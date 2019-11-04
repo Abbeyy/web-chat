@@ -47,22 +47,25 @@ class ChatBox extends React.Component {
     handleMessageSubmit(e) {
         e.preventDefault();
 
+        let sendM = this.sendMessage;
+        // let self = this;
+
         axios.post('http://localhost:3001/sappo/putMessage', {
             user: this.state.name,
             message: this.state.message,
         })
             .then(function (resp) {
                 console.log(resp);
+                sendM();
             })
             .catch(function (err) {
                 console.log(err);
-            });;
+            });
 
-            this.sendMessage();
     }
 
     sendMessage = () => {
-        this.state.socket.emit('new message',
+        this.props.socket.emit('new message',
             {message: this.state.message,
                 coordinates: this.state.coordinates,
                 temperature: this.state.temperature,

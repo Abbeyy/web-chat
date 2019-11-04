@@ -37,9 +37,12 @@ class MessageList extends React.Component {
     }
 
     render() {
-        // this.state.socket.on('new message', (col) => {
-        //     //get messages from database...
-        // });
+        this.props.socket.on('new message', (msg) => {
+            //get messages from database...
+            console.log('Got new message! getting more out of db...');
+            this.getMessagesFromDB();
+            //or add new msg locally?...
+        });
 
         return (<div>
             <ul>
