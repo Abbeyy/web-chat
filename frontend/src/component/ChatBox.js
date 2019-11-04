@@ -4,7 +4,20 @@ import axios from 'axios';
 
 class ChatBox extends React.Component {
     state = {
-        exitChat: false
+        exitChat: false,
+        name: null,
+        message: "",
+        coordinates: "",
+        temperature: "",
+        species: "",
+        abundance: 0
+    }
+
+    constructor(props) {
+        super(props);
+        this.handleOnChange = this.handleOnChange.bind(this);
+        this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
+        this.state.name = this.props.name;
     }
 
     exitChat = () => {
@@ -27,19 +40,43 @@ class ChatBox extends React.Component {
         this.props.socket.disconnect();
     };
 
+    handleOnChange(e) {
+        this.setState({[e.target.id]: e.target.value});
+    };
+
+    handleMessageSubmit(e) {
+        e.preventDefault();
+
+        axios.post('http://localhost:3001/sappo/putMessage', {
+            user: this.state.name,
+            message: this.state.message,
+        })
+            .then(function (resp) {
+                console.log(resp);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });;
+    }
+
     render() {
         return (
             <div>
                 {!this.state.exitChat ?
-                    <div>
-                        <form className="messages-box">}
-                                    <h1>Chat Box</h1>
-                                    <br></br>
-                                    <label>Message</label>
-                                    <textarea placeholder="Write your message..." name="chat-msg" required></textarea>
-                                    <button type="submit" className="button-send">Send!</button>
-                                </form>
-                                <button onClick={this.exitChat}>Exit Chatroom</button></div>
+                    <div className="messages-container">
+                        <form onSubmit={this.handleMessageSubmit} className="messages-form">
+                            <h1>Chat Box</h1>
+                            <br></br>
+                            <label>Message</label>
+                            <textarea onChange={this.handleOnChange} value={this.state.message} type="text" placeholder="Write your message..." id="message" required></textarea>
+                            <input onChange={this.handleOnChange} value={this.state.coordinates} type="text" placeholder="Coordinates ..." id="coordinates"></input>
+                            <input onChange={this.handleOnChange} value={this.state.temperature} type="text" placeholder="Temperature in °C" id="temperature"></input>
+                            <input onChange={this.handleOnChange} value={this.state.species} type="text" placeholder="Species" id="species"></input>
+                            <input onChange={this.handleOnChange} value={this.state.abundance} type="text" placeholder="Quantity of ..." id="abundance"></input>
+                            <button type="submit" className="button-send">Send!</button>
+                        </form>
+                        <button className="button-exit" onClick={this.exitChat}>Exit Chatroom</button>
+                    </div>
                 :
                     <div>
                         You exited the chat. Come back soon!

@@ -1,4 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Sappo
+
+Sappo is a React application which uses JSX on the frontend and an npm server on the backend. Sappo is a real-time chat app.
+
+
+## Installation
+
+Download and unzip Sappo from the following GIT repository link: https://gitlab.cs.cf.ac.uk/c1714546/sappo
+Or clone with the following:
+HTTP: https://gitlab.cs.cf.ac.uk/c1714546/sappo.git
+SSH: git@gitlab.cs.cf.ac.uk:c1714546/sappo.git
+
+Next, install dependencies. 
+cd sappo
+npm install
+cd frontend
+npm install
+cd ..
+cd backend
+npm install
+cd ..
+
+## Runtime
+
+Ensure you are sat within your sappo folder. Open up a command terminal here. Run the following command:
+npm start
+
+## Usage
+
+
+## Tests
+
+## License
+[MIT License]
+
+
+
+
+
 
 ## Available Scripts
 
@@ -37,32 +75,3 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

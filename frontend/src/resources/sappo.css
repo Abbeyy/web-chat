@@ -49,7 +49,6 @@ root {
     background-color: #4CAF50;
     display: inline-block;
     width: 100%;
-    border-color: blue;
     border-top-left-radius: 25px;
     border-top-right-radius: 25px;
     height: 135px;
@@ -73,4 +72,32 @@ root {
     padding: 15px 32px;
     color: white;
     font-size: 18px;
+}
+
+/*ChatBox.js css*/
+.messages-container {
+    background-color: white;
+    vertical-align:middle;
+    width: 100%;
+    height: auto;
+}
+
+.messages-form {
+    background-color: white;
+    vertical-align:middle;
+    width: auto;
+    height: 135px;
+    text-align: center;
+    margin: 10px;
+}
+
+.button-exit {
+    float: right;
+    margin-right: 20px;
+    font-family: Helvetica,Arial,freesans,sans-serif;
+    background-color: #4CAF50;
+    padding: 15px 32px;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
 }

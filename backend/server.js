@@ -5,6 +5,7 @@ const express = require('express');
 let cors = require('cors');
 //Gather schemas
 const AppData = require('./appdata');
+const MessageData = require('./appmessages');
 //Other
 const bodyParser = require('body-parser');
 
@@ -26,7 +27,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//Routes to database activity
+//Routes to database activity for Users Schema
 router.get('/getData', (req, res) => {
     AppData.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
@@ -69,7 +70,31 @@ router.post('/putData', (req, res) => {
     });
 });
 
-// append /api for our http requests
+//Routes to database activity for Messages Schema
+router.post('/putMessage', (req, res) => {
+    let msgData = new MessageData();
+    // let researchData = new ResearchData();
+
+    const { user, message, coordinates, temperature, abundance, species } = req.body;
+
+    if (!user || !message) {
+        return res.json({
+            success: false,
+            error: 'INVALID INPUTS',
+        });
+    }
+
+    msgData.user = user;
+    msgData.message = message;
+    msgData.save((err) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json({ success: true });
+        });
+
+    //Then submit researchData and save...
+});
+
+
 app.use('/sappo', router);
 
 // launch our backend into a port
