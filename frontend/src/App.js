@@ -1,31 +1,47 @@
 import React from 'react';
+import socketIOClient from 'socket.io-client'
 
 import TitleBar from './component/TitleBar';
-import MessageList from './component/MessageList';
 import Users from './component/UserGeneration';
-
-import { subscribeToTimer } from './api';
 
 class App extends React.Component {
     //Create state values
+    endpoint = 'http://localhost:3000';
     state = {
-        timestamp: 'no timestamp yet'
+        endpoint: this.endpoint, //pointing to react frontend, which forwards it to server port from proxy in package.json
+        colour: 'white',
+        socket: socketIOClient(this.endpoint)
     };
 
-    // constructor(props) {
-    //     super(props);
-    //     subscribeToTimer((err, timestamp) => this.setState({
-    //         timestamp
-    //     }));
-    // }
+    constructor(props) {
+        super(props);
+    }
+
+    send = () => {
+        this.state.socket.emit('change colour', this.state.colour);
+    };
+
+    setColor = (color) => {
+        this.setState({ colour: color });
+    };
+
+    componentDidMount = () => {
+        setInterval(this.send(), 1000);
+        this.state.socket.on('change colour', (col) => {
+            document.body.style.backgroundColor = col
+        })
+    };
 
     render() {
+        this.state.socket.on('change colour', (col) => {
+            document.body.style.backgroundColor = col
+        });
+
         return(
             <div className="page">
-                {/*<p>{this.state.timestamp}</p>*/}
                 <TitleBar></TitleBar>
-                {/*<MessageList></MessageList>*/}
-                <Users ></Users>
+                <Users socket={this.state.socket}></Users>
+                <button onClick={() => this.send() }>Change Colour</button>
             </div>
         );
     }

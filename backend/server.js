@@ -3,7 +3,6 @@ const express = require('express');
 let cors = require('cors');
 const bodyParser = require('body-parser');
 const AppData = require('./appdata');
-let http = require('http');
 
 const API_PORT = 3001;
 
@@ -72,51 +71,28 @@ router.post('/putData', (req, res) => {
 app.use('/api', router);
 
 // launch our backend into a port
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+let http = require('http');
+const server = new http.Server(app);
 
 //websocket:
+const socketIO = require('socket.io');
+const io = socketIO(server);
 
-// var serverPort = API_PORT;
-// var webSocketPort = 3002;
-//
-// var server = require('http').Server(app)
-//     .listen(webSocketPort, function() {
-//         console.log("WebSocket listening on port %d", webSocketPort);
-//     });
-//
-// var socketIO = require('socket.io')(server, {
-//     handlePreflightRequest: (req, res) => {
-//         const headers = {
-//             "Access-Control-Allow-Headers": "Content-Type, Authorization",
-//             "Access-Control-Allow-Origin": req.headers.origin, //or the specific origin you want to give access to,
-//             "Access-Control-Allow-Credentials": true
-//         };
-//         res.writeHead(200, headers);
-//         res.end();
-//     }});
+server.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
 
-//
-// const server = http.createServer(app);
-// var io = require('socket.io')(server);
-//
-// io.on('connection', function(socket) {
-//     console.log('connected socket!');
-//
-//     socket.on('greet', function(data) {
-//         console.log(data);
-//         socket.emit('respond', { hello: 'Hey, Mr.Client!' });
-//     });
-//     socket.on('disconnect', function() {
-//         console.log('Socket disconnected');
-//     });
-// });
+// let allClients = [];
+io.on('connection', socket => {
+    // allClients.push(socket);
+    console.log('New client connected');
 
-// //make socket
-// const io = require('socket.io')(server);
-// io.on('connection', (client) => {
-//     client.on('subscribeToTimer', (interval) => {
-//         console.log('client is subscribing to timer with interval ', interval);
-//         setInterval(() => {
-//             client.emit('timer', new Date());
-//         }, interval);
-//     });});
+    socket.on('change colour', (color) => {
+        console.log('Color Changed to: ', color);
+        io.sockets.emit('change color', color);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+        // let pos = allClients.indexOf(socket);
+        // allClients.splice(pos, 1);
+    })
+});

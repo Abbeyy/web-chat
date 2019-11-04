@@ -1,5 +1,7 @@
 import React from 'react';
 import ChatBox from './ChatBox';
+import MessageList from './MessageList';
+
 import axios from 'axios';
 import '../resources/sappo.css';
 
@@ -10,7 +12,7 @@ class Users extends React.Component {
         name: null,
         showChat: false,
         intervalIsSet: false,
-        data: null //all data
+        data: null
     };
 
     constructor(props) {
@@ -61,6 +63,7 @@ class Users extends React.Component {
                     //Used for further interval calls of surrounding function. After first-ever function call.
                     this.setState({users: usernames});
                 }
+                this.setState({data: res.data});
             });
     };
 
@@ -94,7 +97,10 @@ class Users extends React.Component {
         return(
             <div>
                 {this.state.showChat
-                    ? <ChatBox></ChatBox>
+                    ? <div>
+                        <MessageList socket={this.props.socket}></MessageList>
+                        <ChatBox socket={this.props.socket} name={this.state.name} allUsers={this.state.data}></ChatBox>
+                    </div>
                     : this.state.fetched ?
                             <div>
                                 <ul>
