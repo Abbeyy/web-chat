@@ -71,6 +71,13 @@ router.post('/putData', (req, res) => {
 });
 
 //Routes to database activity for Messages Schema
+router.get('/getMessages', (req, res) => {
+    MessageData.find((err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true, data: data });
+    });
+});
+
 router.post('/putMessage', (req, res) => {
     let msgData = new MessageData();
     // let researchData = new ResearchData();

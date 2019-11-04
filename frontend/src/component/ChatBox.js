@@ -57,7 +57,19 @@ class ChatBox extends React.Component {
             .catch(function (err) {
                 console.log(err);
             });;
+
+            this.sendMessage();
     }
+
+    sendMessage = () => {
+        this.state.socket.emit('new message',
+            {message: this.state.message,
+                coordinates: this.state.coordinates,
+                temperature: this.state.temperature,
+                species: this.state.species,
+                abundance: this.state.abundance
+        });
+    };
 
     render() {
         return (
