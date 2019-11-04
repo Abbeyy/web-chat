@@ -15,7 +15,7 @@ class ChatBox extends React.Component {
             }
         });
 
-        axios.delete('http://localhost:3001/api/deleteData', {
+        axios.delete('http://localhost:3001/sappo/deleteData', {
             data: {
                 id: objIdToDelete,
             },

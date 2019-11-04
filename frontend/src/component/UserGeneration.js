@@ -24,6 +24,7 @@ class Users extends React.Component {
     componentDidMount() {
         //get users from database.
         this.getDataFromDb(true);
+        //If interval isnt set, do so to keep gathering names if new users join.
         if (!this.state.intervalIsSet) {
             let interval = setInterval(this.getDataFromDb, 1000);
             this.setState({ intervalIsSet: interval });
@@ -32,9 +33,10 @@ class Users extends React.Component {
     }
 
     componentWillUnmount() {
+        //If interval exists, clear it.
         if (this.state.intervalIsSet) {
             clearInterval(this.state.intervalIsSet);
-            this.setState({ intervalIsSet: null });
+            this.setState({ intervalIsSet: false });
         }
     }
 
@@ -46,7 +48,7 @@ class Users extends React.Component {
     }
 
     getDataFromDb = (callback) => {
-        fetch('http://localhost:3001/api/getData')
+        fetch('http://localhost:3001/sappo/getData')
             .then((data) => data.json())
             .then((res) => {
                 let usernames = [];
@@ -67,15 +69,15 @@ class Users extends React.Component {
             });
     };
 
-    putDataToDB = (user) => {
-        axios.post('http://localhost:3001/api/putData', {
+    putDataInDB = (user) => {
+        axios.post('http://localhost:3001/sappo/putData', {
             user: user,
         })
-            .then(function (response) {
-            console.log(response);
+            .then(function (resp) {
+            console.log(resp);
         })
-            .catch(function (error) {
-                console.log(error);
+            .catch(function (err) {
+                console.log(err);
             });;
     };
 
@@ -88,7 +90,7 @@ class Users extends React.Component {
 
     showChat() {
         //Update users in database to include this users name.
-        this.putDataToDB(this.state.name);
+        this.putDataInDB(this.state.name);
         //Now show chat.
         this.setState({showChat: true});
     }

@@ -1,17 +1,20 @@
+//Gather mongoose and express
 const mongoose = require('mongoose');
 const express = require('express');
+//Gather cors
 let cors = require('cors');
-const bodyParser = require('body-parser');
+//Gather schemas
 const AppData = require('./appdata');
+//Other
+const bodyParser = require('body-parser');
 
+//Constant declarations
 const API_PORT = 3001;
-
 const app = express();
 app.use(cors());
-
 const router = express.Router();
 
-//Database
+//Database connection
 const dbRoute =
     'mongodb+srv://admin:admin@cluster0-ydzqo.mongodb.net/test?retryWrites=true&w=majority';
 mongoose.connect(dbRoute, { useNewUrlParser: true });
@@ -20,12 +23,10 @@ let db = mongoose.connection;
 db.once('open', () => console.log('connected to the database'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(logger('dev'));
 
+//Routes to database activity
 router.get('/getData', (req, res) => {
     AppData.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
@@ -60,6 +61,7 @@ router.post('/putData', (req, res) => {
             error: 'INVALID INPUTS',
         });
     }
+
     data.user = user;
     data.save((err) => {
         if (err) return res.json({ success: false, error: err });
@@ -68,7 +70,7 @@ router.post('/putData', (req, res) => {
 });
 
 // append /api for our http requests
-app.use('/api', router);
+app.use('/sappo', router);
 
 // launch our backend into a port
 let http = require('http');
