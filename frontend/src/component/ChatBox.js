@@ -77,18 +77,23 @@ class ChatBox extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="messages">
                 {!this.state.exitChat ?
                     <div className="messages-container">
                         <form onSubmit={this.handleMessageSubmit} className="messages-form">
-                            <h1>Chat Box</h1>
-                            <br></br>
+                            <h1 className="chat-title">Chat Box</h1>
                             <label>Message</label>
+                            <br/>
                             <textarea onChange={this.handleOnChange} value={this.state.message} type="text" placeholder="Write your message..." id="message" required></textarea>
+                            <br/>
                             <input onChange={this.handleOnChange} value={this.state.coordinates} type="text" placeholder="Coordinates ..." id="coordinates"></input>
+                            <br/>
                             <input onChange={this.handleOnChange} value={this.state.temperature} type="text" placeholder="Temperature in °C" id="temperature"></input>
+                            <br/>
                             <input onChange={this.handleOnChange} value={this.state.species} type="text" placeholder="Species" id="species"></input>
+                            <br/>
                             <input onChange={this.handleOnChange} value={this.state.abundance} type="text" placeholder="Quantity of ..." id="abundance"></input>
+                            <br/>
                             <button type="submit" className="button-send">Send!</button>
                         </form>
                         <button className="button-exit" onClick={this.exitChat}>Exit Chatroom</button>

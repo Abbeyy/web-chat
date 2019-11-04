@@ -75,20 +75,42 @@ root {
 }
 
 /*ChatBox.js css*/
-.messages-container {
-    background-color: white;
-    vertical-align:middle;
+.messages {
     width: 100%;
+}
+
+.messages-container {
+    width: auto;
     height: auto;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 25px;
+    padding-top: 10px;
+    background-color: #4CAF50;
 }
 
 .messages-form {
     background-color: white;
-    vertical-align:middle;
     width: auto;
-    height: 135px;
+    height: auto;
     text-align: center;
-    margin: 10px;
+}
+
+.message-text textarea input {
+    width: 100%;
+    /*margin: 15px;*/
+    border: none;
+    background: #f1f1f1;
+    resize: none;
+    min-height: 200px;
+}
+
+.chat-title {
+    padding-top: 10px;
+}
+
+.button-send {
+    margin-bottom: 10px;
 }
 
 .button-exit {
@@ -106,10 +128,15 @@ root {
 
 .messages-list {
     margin: 0 auto;
-    text-align: center;
+    list-style: none;
+    padding: 0;
 }
 
 .messages-item {
-    display: inline-block;
+    width: auto;
     vertical-align: top;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #EEEEEE;
+    border: 1px solid #DDDDDD;
 }

@@ -25,7 +25,6 @@ class MessageList extends React.Component {
                     return (
                         <li className="messages-item" key={item._id}>
                         <p>{item.user} said</p>
-                        <br></br>
                         <p>{item.message}</p>
                     </li>
                     );
