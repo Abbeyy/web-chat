@@ -82,6 +82,7 @@ class ChatBox extends React.Component {
                     <div className="messages-container">
                         <form onSubmit={this.handleMessageSubmit} className="messages-form">
                             <h1 className="chat-title">Chat Box</h1>
+                            <br/>
                             <label>Message</label>
                             <br/>
                             <textarea onChange={this.handleOnChange} value={this.state.message} type="text" placeholder="Write your message..." id="message" required></textarea>

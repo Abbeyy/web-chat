@@ -12,10 +12,10 @@ class App extends React.Component {
         colour: 'white',
         socket: socketIOClient(this.endpoint)
     };
-
-    constructor(props) {
-        super(props);
-    }
+    //
+    // constructor(props) {
+    //     super(props);
+    // }
 
     send = () => {
         this.state.socket.emit('change colour', this.state.colour);

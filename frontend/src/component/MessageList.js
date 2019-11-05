@@ -24,8 +24,12 @@ class MessageList extends React.Component {
                 let listItems = res.data.map(item => {
                     return (
                         <li className="messages-item" key={item._id}>
-                        <p>{item.user} said</p>
-                        <p>{item.message}</p>
+                            <div className="message-content">
+                                <p className="tooltip">{item.user} said
+                                    <span className="tooltip-datetime">{item.createdAt}</span>
+                                </p>
+                                <p>{item.message}</p>
+                            </div>
                     </li>
                     );
                 });
@@ -40,7 +44,8 @@ class MessageList extends React.Component {
             //get messages from database...
             console.log('Got new message! getting more out of db...');
             this.getMessagesFromDB();
-            //or add new msg locally?...
+            //Add new message locally for efficiency...
+
         });
 
         return (<div>
