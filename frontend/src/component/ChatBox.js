@@ -4,7 +4,6 @@ import axios from 'axios';
 
 class ChatBox extends React.Component {
     state = {
-        exitChat: false,
         name: null,
         message: "",
         coordinates: "",
@@ -19,27 +18,6 @@ class ChatBox extends React.Component {
         this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
         this.state.name = this.props.name;
     }
-
-    exitChat = () => {
-        let objIdToDelete = null;
-        this.props.allUsers.forEach((dat) => {
-            if (dat.user == this.state.name) {
-                objIdToDelete = dat._id;
-            }
-        });
-
-
-        axios.delete('http://localhost:3001/sappo/deleteData', {
-            data: {
-                id: objIdToDelete,
-            },
-        });
-
-        this.setState({exitChat: true});
-
-        this.props.socket.emit('disconnect');
-        this.props.socket.disconnect();
-    };
 
     handleOnChange(e) {
         this.setState({[e.target.id]: e.target.value});
@@ -78,7 +56,6 @@ class ChatBox extends React.Component {
     render() {
         return (
             <div className="messages">
-                {!this.state.exitChat ?
                     <div className="messages-container">
                         <form onSubmit={this.handleMessageSubmit} className="messages-form">
                             <h1 className="chat-title">Chat Box</h1>
@@ -97,12 +74,7 @@ class ChatBox extends React.Component {
                             <br/>
                             <button type="submit" className="button-send">Send!</button>
                         </form>
-                        <button className="button-exit" onClick={this.exitChat}>Exit Chatroom</button>
                     </div>
-                :
-                    <div>
-                        You exited the chat. Come back soon!
-                    </div>}
             </div>
         );
     }

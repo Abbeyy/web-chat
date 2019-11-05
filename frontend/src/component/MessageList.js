@@ -34,16 +34,14 @@ class MessageList extends React.Component {
                         </ListGroupItem>
                     );
                 });
-                this.setState({messages: listItems},  () => {
-                    console.log(this.state.messages);
-                });
+                this.setState({messages: listItems});
             });
     }
 
     render() {
         this.props.socket.on('new message', (msg) => {
             //get messages from database...
-            console.log('Got new message! getting more out of db...');
+            // console.log('Got new message! getting more out of db...');
             this.getMessagesFromDB();
             //Add new message locally for efficiency...
 

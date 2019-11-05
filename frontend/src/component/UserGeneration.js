@@ -12,6 +12,7 @@ import Jumbotron from "react-bootstrap/Jumbotron";
 
 class Users extends React.Component {
     state = {
+        exitChat: false,
         fetched: false,
         users: null, //get existing users from db,
         name: null,
@@ -44,6 +45,26 @@ class Users extends React.Component {
             this.setState({ intervalIsSet: false });
         }
     }
+
+    exitChat = () => {
+        let objIdToDelete = null;
+        this.state.data.forEach((data) => {
+            if (data.user == this.state.name) {
+                objIdToDelete = data._id;
+            }
+        });
+
+        axios.delete('http://localhost:3001/sappo/deleteData', {
+            data: {
+                id: objIdToDelete,
+            },
+        });
+
+        this.setState({exitChat: true});
+
+        this.props.socket.emit('disconnect');
+        this.props.socket.disconnect();
+    };
 
     setRemainingStates = () => {
         this.setState({fetched: true}, () => {
@@ -103,26 +124,35 @@ class Users extends React.Component {
     render() {
         return(
             <Jumbotron  id="centred">
-                {this.state.showChat
-                    ? <div>
-                        <MessageList socket={this.props.socket}></MessageList>
-                        <ChatBox socket={this.props.socket} name={this.state.name} allUsers={this.state.data}></ChatBox>
-                    </div>
-                    : this.state.fetched ?
-                            <div  id="centred">
-                                <ListGroup id="users-list">
-                                    {this.state.users ? this.listUsers() : <ListGroupItem id="users">No users yet</ListGroupItem>}
-                                </ListGroup>
-                                <br></br>
-                                <p className="users-text">Your username is: </p>
-                                {this.state.name ?
-                                    <div className="username">
-                                        <p>{this.state.name}</p>
-                                        <button onClick={this.showChat} className="chatroom-button">Enter Chatroom!</button>
-                                    </div>
-                                    : <p className="users-text">"name not gathered yet"</p>}
+                {!this.state.exitChat ?
+                    this.state.showChat
+                            ? <div>
+                                <MessageList socket={this.props.socket}></MessageList>
+                                <ChatBox socket={this.props.socket} name={this.state.name} allUsers={this.state.data}></ChatBox>
+                                <button className="button-exit" onClick={this.exitChat}>Exit Chatroom</button>
                             </div>
-                            : <div>fetching names</div>}
+                            : this.state.fetched ?
+                                <div  id="centred">
+                                    <ListGroup id="users-list">
+                                        {this.state.users ? this.listUsers() : <ListGroupItem id="users">No users yet</ListGroupItem>}
+                                    </ListGroup>
+                                    <br></br>
+                                    <p className="users-text">Your username is: </p>
+                                    {this.state.name ?
+                                        <div className="username">
+                                            <p>{this.state.name}</p>
+                                            <button onClick={this.showChat} className="chatroom-button">Enter Chatroom!</button>
+                                        </div>
+                                        : <p className="users-text">"name not gathered yet"</p>}
+                                </div>
+                                : <div>fetching names</div>
+                :
+                <div>
+                    You exited the chat. Come back soon!
+                </div>
+
+                }
+
             </Jumbotron>
 
         );
