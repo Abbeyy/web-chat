@@ -1,6 +1,8 @@
 import React from 'react';
-import '../resources/sappo.css';
+// import '../resources/sappo.css';
 import axios from 'axios';
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 class MessageList extends React.Component {
     state = {
@@ -23,14 +25,13 @@ class MessageList extends React.Component {
             .then((res) => {
                 let listItems = res.data.map(item => {
                     return (
-                        <li className="messages-item" key={item._id}>
-                            <div className="message-content">
-                                <p className="tooltip">{item.user} said
-                                    <span className="tooltip-datetime">{item.createdAt}</span>
+                        <ListGroupItem key={item._id}>
+                                <p id="tooltip">{item.user} said
+                                    <br/>
+                                    <span id="tooltip-datetime">{item.createdAt}</span>
+                                    {item.message}
                                 </p>
-                                <p>{item.message}</p>
-                            </div>
-                    </li>
+                        </ListGroupItem>
                     );
                 });
                 this.setState({messages: listItems},  () => {
@@ -49,13 +50,13 @@ class MessageList extends React.Component {
         });
 
         return (<div>
-            <ul className="messages-list">
+            <ListGroup id="messages">
                 {this.state.messages ?
                     this.state.messages
                     :
-                    <li>No messages yet</li>
+                    <ListGroupItem>No messages yet</ListGroupItem>
                 }
-            </ul>
+            </ListGroup>
         </div>);
     }
 }

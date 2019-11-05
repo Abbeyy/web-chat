@@ -4,6 +4,11 @@ import MessageList from './MessageList';
 
 import axios from 'axios';
 import '../resources/sappo.css';
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroup";
+import Container from "react-bootstrap/Container";
+import Jumbotron from "react-bootstrap/Jumbotron";
+
 
 class Users extends React.Component {
     state = {
@@ -83,7 +88,7 @@ class Users extends React.Component {
 
     listUsers() {
         let userList = this.state.users.map((user, i) =>
-            <li key={i}>{user}</li>
+            <ListGroupItem id="users" key={i}>{user}</ListGroupItem>
         );
         return (userList);
     }
@@ -97,17 +102,17 @@ class Users extends React.Component {
 
     render() {
         return(
-            <div>
+            <Jumbotron  id="centred">
                 {this.state.showChat
                     ? <div>
                         <MessageList socket={this.props.socket}></MessageList>
                         <ChatBox socket={this.props.socket} name={this.state.name} allUsers={this.state.data}></ChatBox>
                     </div>
                     : this.state.fetched ?
-                            <div>
-                                <ul>
-                                    {this.state.users ? this.listUsers() : <li>No users yet</li>}
-                                </ul>
+                            <div  id="centred">
+                                <ListGroup id="users-list">
+                                    {this.state.users ? this.listUsers() : <ListGroupItem id="users">No users yet</ListGroupItem>}
+                                </ListGroup>
                                 <br></br>
                                 <p className="users-text">Your username is: </p>
                                 {this.state.name ?
@@ -118,48 +123,12 @@ class Users extends React.Component {
                                     : <p className="users-text">"name not gathered yet"</p>}
                             </div>
                             : <div>fetching names</div>}
-            </div>
+            </Jumbotron>
 
         );
     }
 
 }
-//
-// class UserList extends React.Component {
-//     state = {
-//         user: null
-//     }
-//
-//     constructor(props) {
-//         super(props);
-//     }
-//
-//     listUsers() {
-//         let userList = this.props.users.map((user, i) =>
-//             <li key={i}>{user}</li>
-//         );
-//         return (userList);
-//     }
-//
-//     componentDidMount() {
-//         let username = UserGenerator(this.props.users);
-//         this.props.addNewUser(username);
-//         this.setState({user: username});
-//     }
-//
-//     render() {
-//         return (
-//             <div>
-//                 <ul>
-//                     {this.props.users ? this.listUsers() : <li>No users yet</li>}
-//                 </ul>
-//                 <p>Your username is: </p>
-//                 <p>{this.state.user ? this.state.user : "name not gathered yet"}</p>
-//             </div>
-//         );
-//     }
-//
-// }
 
 function UserGenerator (existingUsers) {
     let rando =  Math.random().toString(36).substring(7); //random sting of length

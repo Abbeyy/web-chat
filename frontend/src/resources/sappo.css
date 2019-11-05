@@ -14,6 +14,13 @@ root {
     display: block;
 }
 
+#centered {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /*App.js css*/
 
 .page {
@@ -24,104 +31,81 @@ root {
 }
 
 /*TitleBar.js css*/
-.logo {
-    float: left;
-    transform: rotate(90deg);
-    height: 120px;
-    width: 150px;
-}
-
-.app-title {
-    float: left;
-    color: white;
-    margin-left: 20px;
-    margin-right: 10px;
-    margin-top: 45px;
-}
 
 .rotate90 {
     transform: rotate(90deg);
-    height: 120px;
-    width: 150px;
+    height: 100px;
+    width: 130px;
 }
 
-.title-bar {
+.navbar {
     background-color: #4CAF50;
-    display: inline-block;
-    width: 100%;
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
-    height: 135px;
+    height: 150px;
+}
+
+/*id overtakes React\'s bootstrap*/
+#title-text {
+    color: white;
 }
 
 /*UserGeneration.js css*/
-.users-text {
-    text-align: center;
+#users-list {
+    list-style: none;
 }
 
-.username {
-    text-align: center;
-    font-weight: bold;
+#users {
+    padding: 5px;
 }
 
-.chatroom-button {
-    font-family: Helvetica,Arial,freesans,sans-serif;
-    font-style: italic;
-    font-weight: bold;
-    background-color: #4CAF50;
-    padding: 15px 32px;
-    color: white;
-    font-size: 18px;
-}
 
 /*ChatBox.js css*/
 
-.messages {
-    background-color: white;
-    text-align: center;
-    vertical-align: middle;
-    border: 25px solid #4CAF50;
-}
+/*.messages {*/
+/*    background-color: white;*/
+/*    text-align: center;*/
+/*    vertical-align: middle;*/
+/*    border: 25px solid #4CAF50;*/
+/*}*/
 
-.messages-container {
-    background-color: white;
-    vertical-align: middle;
-    display: inline-block;
-    text-align: center;
-}
+/*.messages-container {*/
+/*    background-color: white;*/
+/*    vertical-align: middle;*/
+/*    display: inline-block;*/
+/*    text-align: center;*/
+/*}*/
 
-.messages-form {
-    width: auto;
-    background-color: white;
-    display: block;
-}
+/*.messages-form {*/
+/*    width: auto;*/
+/*    background-color: white;*/
+/*    display: block;*/
+/*}*/
 
-.message-text textarea input {
-    /*margin: 15px;*/
-    border: none;
-    background: #f1f1f1;
-    resize: none;
-    display: inline-block;
-}
+/*.message-text textarea input {*/
+/*    !*margin: 15px;*!*/
+/*    border: none;*/
+/*    background: #f1f1f1;*/
+/*    resize: none;*/
+/*    display: inline-block;*/
+/*}*/
 
-.chat-title {
-}
+/*.chat-title {*/
+/*}*/
 
-.button-send {
-    margin-bottom: 10px;
-}
+/*.button-send {*/
+/*    margin-bottom: 10px;*/
+/*}*/
 
-.button-exit {
-    float: right;
-    font-family: Helvetica,Arial,freesans,sans-serif;
-    background-color: #4CAF50;
-    padding: 15px 32px;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 30px;
-    margin-right: 5px;
-}
+/*.button-exit {*/
+/*    float: right;*/
+/*    font-family: Helvetica,Arial,freesans,sans-serif;*/
+/*    background-color: #4CAF50;*/
+/*    padding: 15px 32px;*/
+/*    color: white;*/
+/*    font-weight: bold;*/
+/*    font-size: 14px;*/
+/*    margin-bottom: 30px;*/
+/*    margin-right: 5px;*/
+/*}*/
 
 /*MessageList.js css*/
 
@@ -133,44 +117,17 @@ root {
     margin-top: 45px;
 }
 
-.messages-list {
-    margin: 0 auto;
-    list-style: none;
-    padding: 0;
-    padding-top: 5px;
-    background-color: #EEEEEE;
-    padding-bottom: 5px;
+.list-group-item p {
+    font-size: 16px;
 }
 
-.messages-item {
-    width: auto;
-    vertical-align: top;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    background-color: #EEEEEE;
-    height: auto;
-}
-
-.message-content {
-    width: auto;
-    vertical-align: top;
-    background-color: white;
-    border: 1px solid #DDDDDD;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.message-content p {
-    font-size: 12px;
-}
-
-.tooltip {
+#tooltip {
     width: 175px;
     position: relative;
     font-size: 10px;
 }
 
-.tooltip .tooltip-datetime {
+#tooltip #tooltip-datetime {
     visibility: hidden;
     width: 175px;
     background-color: black;
@@ -185,6 +142,6 @@ root {
     left: 105%;
 }
 
-.tooltip:hover .tooltip-datetime {
+#tooltip:hover #tooltip-datetime {
     visibility: visible;
 }
