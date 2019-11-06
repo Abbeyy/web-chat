@@ -28,8 +28,15 @@ npm start
 ## Justification
 
 HTTP and Websocket:
-I use axios to preform ajax requests because ... [cleaner code - more concise and easily understandable thus maintainable. Less chance of making mistakes first time round]
-I use a websocket to determine when a new message has been submitted to the database, so it can push this change to all clients connected. Logically, I like that the store of messages is updated once, and that there is an entity which registers a change and so pushes this change to all those concerned. [project to justify]
+I use axios to preform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
+However, I use JavaScript's 'fetch' instead of using an axios get request because, although axios unpacks the response for me, fetch allows me to use a callback passed to the overall function (see UserGeneration.js 76-95, getDataFromDB). And so, for fluidity, whereever else I may have used an axios.get, I instead use fetch.
+
+I use axios to put new messages into the database. When a message is created, it does not have an _id or a time of creation. But when a message is put into the database, this information is generated.
+So, to update my components correctly with all this information, I would need to query the database and find the new message put into it, to then access the _id and time of creation, to then update state from the information the websocket receives, and so the component could rerender to show the new message.
+This is very long-winded and not efficient.
+Instead, I chose to re-use my existing method, getMessagesFromDB(), which queries the database for all messages (the new message has already been put in at this time),
+and uses the query results to update state and rerender the component - and does not use the new-message information passed to the socket.
+This is far more efficient and, as the user's of this chat may not have strong signals, more optimal solutions are key. (MessageList.js 18-25, ComponentDidMount())
 
 ## Usage
 

@@ -46,6 +46,7 @@ class ChatBox extends React.Component {
     sendMessage = () => {
         this.props.socket.emit('new message',
             {message: this.state.message,
+                user: this.state.name,
                 coordinates: this.state.coordinates,
                 temperature: this.state.temperature,
                 species: this.state.species,

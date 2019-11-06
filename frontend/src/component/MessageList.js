@@ -6,7 +6,8 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 class MessageList extends React.Component {
     state = {
-        messages: null
+        messages: null,
+        data: null
     };
 
     constructor(props) {
@@ -17,6 +18,10 @@ class MessageList extends React.Component {
     componentDidMount() {
         //get all messages from db -- no interval, done once...
         this.getMessagesFromDB();
+
+        this.props.socket.on('new message', (msg) => {
+            this.getMessagesFromDB();
+        });
     }
 
     getMessagesFromDB = () => {
@@ -34,19 +39,18 @@ class MessageList extends React.Component {
                         </ListGroupItem>
                     );
                 });
+                let data = res.data.map(item => {
+                    return {_id: item._id,
+                    user: item.user,
+                    createdAt: item.createdAt,
+                    message: item.message};
+                });
                 this.setState({messages: listItems});
+                this.setState({data: data});
             });
     }
 
     render() {
-        this.props.socket.on('new message', (msg) => {
-            //get messages from database...
-            // console.log('Got new message! getting more out of db...');
-            this.getMessagesFromDB();
-            //Add new message locally for efficiency...
-
-        });
-
         return (<div>
             <ListGroup id="messages">
                 {this.state.messages ?

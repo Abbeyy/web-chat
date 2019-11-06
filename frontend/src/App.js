@@ -41,7 +41,7 @@ class App extends React.Component {
             <div className="page">
                 <TitleBar></TitleBar>
                 <Users socket={this.state.socket}></Users>
-                <button onClick={() => this.send() }>Change Colour</button>
+                {/*<button onClick={() => this.send() }>Change Colour</button>*/}
             </div>
         );
     }
