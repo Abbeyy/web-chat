@@ -31,12 +31,25 @@ class ChatBox extends React.Component {
 
         axios.post('http://localhost:3001/sappo/putMessage', {
             user: this.state.name,
-            message: this.state.message,
+            message: this.state.message
         })
             .then(function (resp) {
                 console.log(resp);
                 sendM();
             })
+            .catch(function (err) {
+                console.log(err);
+            });
+
+        axios.post('http://localhost:3001/sappo/putResearch', {
+            user: this.state.name,
+            coordinates: this.state.coordinates,
+            temperature: this.state.temperature,
+            species: this.state.species,
+            abundance: this.state.abundance
+        }).then(function (resp) {
+            console.log(resp);
+        })
             .catch(function (err) {
                 console.log(err);
             });

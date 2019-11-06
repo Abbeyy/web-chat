@@ -7,7 +7,9 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 class MessageList extends React.Component {
     state = {
         messages: null,
-        data: null
+        data: null,
+        research: null,
+        showResearch: false
     };
 
     constructor(props) {
@@ -18,9 +20,11 @@ class MessageList extends React.Component {
     componentDidMount() {
         //get all messages from db -- no interval, done once...
         this.getMessagesFromDB();
+        this.getResearchFromDB();
 
         this.props.socket.on('new message', (msg) => {
             this.getMessagesFromDB();
+            this.getResearchFromDB();
         });
     }
 
@@ -48,7 +52,37 @@ class MessageList extends React.Component {
                 this.setState({messages: listItems});
                 this.setState({data: data});
             });
-    }
+    };
+
+    getResearchFromDB = () => {
+        fetch('http://localhost:3001/sappo/getResearch')
+            .then((data) => data.json())
+            .then((res) => {
+                let listItems = res.data.map(item => {
+                    return (
+                        <ListGroupItem key={item._id}>
+                            <p>{item.user} submitted
+                                <br/>
+                                Coordinates of find: {item.coordinates}
+                                <br/>
+                                Temperature at find: {item.temperature}
+                                <br/>
+                                Species found and how many: {item.species}, x{item.abundance}
+                            </p>
+                        </ListGroupItem>
+                    );
+                });
+                this.setState({research: listItems});
+            });
+    };
+
+    showResearch = () => {
+        this.setState({showResearch: true});
+    };
+
+    closeResearch = () => {
+        this.setState({showResearch: false});
+    };
 
     render() {
         return (<div>
@@ -59,6 +93,19 @@ class MessageList extends React.Component {
                     <ListGroupItem>No messages yet</ListGroupItem>
                 }
             </ListGroup>
+            {!this.state.showResearch ?
+                <button onClick={this.showResearch}>Show Research</button>
+                :
+                <div>
+                    <ListGroup id="messages">
+                        {this.state.research ?
+                            this.state.research
+                            :
+                            <ListGroupItem>No research yet</ListGroupItem>}
+                    </ListGroup>
+                    <button onClick={this.closeResearch}>Close Research</button>
+                </div>
+            }
         </div>);
     }
 }

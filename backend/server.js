@@ -6,6 +6,7 @@ let cors = require('cors');
 //Gather schemas
 const AppData = require('./appdata');
 const MessageData = require('./appmessages');
+const ResearchData = require('./appresearch');
 //Other
 const bodyParser = require('body-parser');
 
@@ -80,9 +81,8 @@ router.get('/getMessages', (req, res) => {
 
 router.post('/putMessage', (req, res) => {
     let msgData = new MessageData();
-    // let researchData = new ResearchData();
 
-    const { user, message, coordinates, temperature, abundance, species } = req.body;
+    const { user, message } = req.body;
 
     if (!user || !message) {
         return res.json({
@@ -97,8 +97,45 @@ router.post('/putMessage', (req, res) => {
             if (err) return res.json({ success: false, error: err });
             return res.json({ success: true });
         });
+});
 
-    //Then submit researchData and save...
+//Routes to database activity for Research Schema
+router.get('/getResearch', (req, res) => {
+    ResearchData.find((err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true, data: data });
+    });
+});
+
+router.post('/putResearch', (req, res) => {
+    let researchData = new ResearchData();
+
+    const { user, coordinates, temperature, abundance, species} = req.body;
+
+    let count = 0;
+    researchData.user = user;
+    if (coordinates) {
+        researchData.coordinates = coordinates;
+        count++;
+    }
+    if (temperature) {
+        researchData.temperature = temperature;
+        count++;
+    }
+    if (abundance) {
+        researchData.abundance = abundance;
+        count++;
+    }
+    if (species) {
+        researchData.species = species;
+        count++;
+    }
+    if (count > 0) {
+        researchData.save((err) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json({ success: true });
+        });
+    }
 });
 
 
