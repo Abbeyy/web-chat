@@ -9,7 +9,9 @@ class MessageList extends React.Component {
         messages: null,
         data: null,
         research: null,
-        showResearch: false
+        researchdata: null,
+        showResearchData: false,
+        showResearchMessages: false
     };
 
     constructor(props) {
@@ -59,6 +61,7 @@ class MessageList extends React.Component {
             .then((data) => data.json())
             .then((res) => {
                 let listItems = res.data.map(item => {
+                    console.log(item);
                     return (
                         <ListGroupItem key={item._id}>
                             <p>{item.user} submitted
@@ -72,16 +75,43 @@ class MessageList extends React.Component {
                         </ListGroupItem>
                     );
                 });
+                //here
+                let researchdata = {};
+                for (let x = 0; x < res.data.length; x++) {
+                    if (!res.data[x].species in researchdata) {
+                        researchdata.push({key: res.data[x].species, value: res.dara[x].abundance});
+                    } else {
+                        researchdata[res.data[x].species] = res.data[x].abundance;
+                    }
+                }
+                let sorteddata = [];
+                for(let species in researchdata) {
+                    let abundance = researchdata[species];
+                    sorteddata.push(
+                        <ListGroupItem>
+                            <p>{abundance} {species}s have been found</p>
+                        </ListGroupItem>
+                    );
+                }
                 this.setState({research: listItems});
+                this.setState({researchdata: sorteddata})
             });
     };
 
-    showResearch = () => {
-        this.setState({showResearch: true});
+    showResearchData = () => {
+        this.setState({showResearchData: true});
     };
 
-    closeResearch = () => {
-        this.setState({showResearch: false});
+    closeResearchData = () => {
+        this.setState({showResearchData: false});
+    };
+
+    showResearchMessages = () => {
+        this.setState({showResearchMessages: true});
+    };
+
+    closeResearchMessages = () => {
+        this.setState({showResearchMessages: false});
     };
 
     render() {
@@ -93,8 +123,22 @@ class MessageList extends React.Component {
                     <ListGroupItem>No messages yet</ListGroupItem>
                 }
             </ListGroup>
-            {!this.state.showResearch ?
-                <button onClick={this.showResearch}>Show Research</button>
+            {!this.state.showResearchData ?
+                <button onClick={this.showResearchData}>Show Research Data</button>
+                :
+                <div>
+                    <ListGroup id="data">
+                        {this.state.researchdata ?
+                        this.state.researchdata :
+                        <ListGroupItem>
+                            There's no data to show yet
+                        </ListGroupItem>}
+                    </ListGroup>
+                    <button onClick={this.closeResearchData}>Close Research Data</button>
+                </div>
+            }
+            {!this.state.showResearchMessages ?
+                <button onClick={this.showResearchMessages}>Show Research Submission Messages</button>
                 :
                 <div>
                     <ListGroup id="messages">
@@ -103,7 +147,7 @@ class MessageList extends React.Component {
                             :
                             <ListGroupItem>No research yet</ListGroupItem>}
                     </ListGroup>
-                    <button onClick={this.closeResearch}>Close Research</button>
+                    <button onClick={this.closeResearchMessages}>Close Research Messages</button>
                 </div>
             }
         </div>);
