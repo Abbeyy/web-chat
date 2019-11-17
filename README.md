@@ -2,7 +2,6 @@
 
 Sappo is a React application which uses JSX on the frontend and an npm server on the backend. Sappo is a real-time chat app.
 
-
 ## Installation
 
 Download and unzip Sappo from the following GIT repository link: https://gitlab.cs.cf.ac.uk/c1714546/sappo
@@ -80,11 +79,3 @@ This cuts down on the amount of information shown on the UI at any one time, ens
 
 ## License
 [MIT License]
-
-
-
-• how to build/start/run/compile the project
-• details of any assumptions you have made
-• details of any aspects you have mocked
-• explanation of any paradigms used
-• justification for styling of application
