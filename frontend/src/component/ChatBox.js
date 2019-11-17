@@ -1,6 +1,12 @@
 import React from 'react';
 import '../resources/sappo.css';
 import axios from 'axios';
+import Jumbotron from "react-bootstrap/Jumbotron";
+import Form from "react-bootstrap/Form";
+import FormLabel from "react-bootstrap/FormLabel";
+import FormControl from "react-bootstrap/FormControl";
+import Button from "react-bootstrap/Button";
+import FormGroup from "react-bootstrap/FormGroup";
 
 class ChatBox extends React.Component {
     state = {
@@ -75,28 +81,34 @@ class ChatBox extends React.Component {
 
     render() {
         return (
-            <div className="messages">
-                    <div className="messages-container">
-                        <form onSubmit={this.handleMessageSubmit} className="messages-form">
-                            <h1 className="chat-title">Chat Box</h1>
+            <div  id="col-sm">
+                <br/>
+                        <Form onSubmit={this.handleMessageSubmit} className="messages-form">
+                            <FormGroup>
+                                <h3>Chat Box</h3>
+                                <br/>
+                            </FormGroup>
+                            <FormGroup>
+                                <h4>Message</h4>
+                                <br/>
+                                <FormControl onChange={this.handleOnChange} value={this.state.message} type="text" placeholder="Write your message..." id="message" required></FormControl>
+                            </FormGroup>
                             <br/>
-                            <label>Message</label>
-                            <br/>
-                            <textarea onChange={this.handleOnChange} value={this.state.message} type="text" placeholder="Write your message..." id="message" required></textarea>
-                            <br/>
-                            <input onChange={this.handleOnChange} value={this.state.coordinates} type="text" placeholder="Coordinates ..." id="coordinates"></input>
-                            <br/>
-                            <input onChange={this.handleOnChange} value={this.state.temperature} type="text" placeholder="Temperature in °C" id="temperature"></input>
-                            <br/>
-                            <input onChange={this.handleOnChange} value={this.state.species} type="text" placeholder="Species" id="species"></input>
-                            <br/>
-                            <input onChange={this.handleOnChange} value={this.state.abundance} type="text" placeholder="Quantity of ..." id="abundance"></input>
-                            <br/>
-                            {/*<input onChange={this.handleImageOnChange} type="file" id="image" accept="image/png"></input>*/}
-                            {/*<br/>*/}
-                            <button type="submit" className="button-send">Send!</button>
-                        </form>
-                    </div>
+                            <FormGroup>
+                                <FormControl onChange={this.handleOnChange} value={this.state.coordinates} type="text" placeholder="Coordinates ..." id="coordinates"></FormControl>
+                                <br/>
+                                <FormControl onChange={this.handleOnChange} value={this.state.temperature} type="text" placeholder="Temperature in °C" id="temperature"></FormControl>
+                                <br/>
+                                <FormControl onChange={this.handleOnChange} value={this.state.species} type="text" placeholder="Species" id="species"></FormControl>
+                                <br/>
+                                <FormControl onChange={this.handleOnChange} value={this.state.abundance} type="text" placeholder="Quantity of ..." id="abundance"></FormControl>
+                                <br/>
+                                {/*<input onChange={this.handleImageOnChange} type="file" id="image" accept="image/png"></input>*/}
+                                {/*<br/>*/}
+                            </FormGroup>
+                            <Button type="submit" variant="success">Send!</Button>
+                        </Form>
+                <br/>
             </div>
         );
     }

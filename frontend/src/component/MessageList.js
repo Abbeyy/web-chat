@@ -3,6 +3,7 @@ import React from 'react';
 import axios from 'axios';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import Button from "react-bootstrap/Button";
 
 class MessageList extends React.Component {
     state = {
@@ -121,6 +122,7 @@ class MessageList extends React.Component {
 
     render() {
         return (<div>
+            <h2>Chat Messages</h2>
             <ListGroup id="messages">
                 {this.state.messages ?
                     this.state.messages
@@ -128,10 +130,13 @@ class MessageList extends React.Component {
                     <ListGroupItem>No messages yet</ListGroupItem>
                 }
             </ListGroup>
+            <br/>
             {!this.state.showResearchData ?
-                <button onClick={this.showResearchData}>Show Research Data</button>
+                <Button variant="success" onClick={this.showResearchData}>Show Research Data</Button>
                 :
                 <div>
+                    <br/>
+                    <h2>Research Data</h2>
                     <ListGroup id="data">
                         {this.state.researchdata ?
                         this.state.researchdata :
@@ -139,20 +144,25 @@ class MessageList extends React.Component {
                             There's no data to show yet
                         </ListGroupItem>}
                     </ListGroup>
-                    <button onClick={this.closeResearchData}>Close Research Data</button>
+                    <Button variant="warning" onClick={this.closeResearchData}>Close Research Data</Button>
                 </div>
             }
             {!this.state.showResearchMessages ?
-                <button onClick={this.showResearchMessages}>Show Research Submission Messages</button>
+                <div>
+                    <br/>
+                    <Button variant="success" onClick={this.showResearchMessages}>Show Research Submission Messages</Button>
+                </div>
                 :
                 <div>
+                    <br/>
+                    <h2>Research Submissions</h2>
                     <ListGroup id="messages">
                         {this.state.research ?
                             this.state.research
                             :
                             <ListGroupItem>No research yet</ListGroupItem>}
                     </ListGroup>
-                    <button onClick={this.closeResearchMessages}>Close Research Messages</button>
+                    <Button variant="warning" onClick={this.closeResearchMessages}>Close Research Messages</Button>
                 </div>
             }
         </div>);

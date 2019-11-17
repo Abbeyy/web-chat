@@ -81,7 +81,7 @@ My components do not rely on other's to have a certain state or propoerty, but i
 I incorporated React-Bootstrap into my project because it allowed me to create an application with a continuous style: in terms of colour, shapes and positioning of components and their elements.
 <br/>
 <br/>
-I used my own CSS stylesheet on top of the Bootstrap dependency because it enabled me to show the dates and times of chat messages when the user hovers over the name of whoever sent said message.
+I used my own CSS stylesheet on top of the Bootstrap dependency because in certain places, I wanted to use my own styling over what Bootstrap could offer me - and at other times, Bootstrap simply didn't have what I needed, such as how I able able to show the dates and times of chat messages when the user hovers over the name of whoever sent said message.
 This cuts down on the amount of information shown on the UI at any one time, ensuring the interface is kept clear of jargon and specific information, but which data is easy to find when the user wants it.
 
 ## License

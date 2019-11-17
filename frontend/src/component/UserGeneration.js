@@ -7,6 +7,7 @@ import '../resources/sappo.css';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroup";
 import Jumbotron from "react-bootstrap/Jumbotron";
+import Button from "react-bootstrap/Button";
 
 
 class Users extends React.Component {
@@ -27,12 +28,17 @@ class Users extends React.Component {
 
     componentDidMount() {
         //get users from database.
-        this.getDataFromDb(true);
+        this.getDataFromDb(true, false);
     }
 
     exitChat = () => {
+        this.getDataFromDb(false, true);
+    };
+
+    exit = () => {
         let objIdToDelete = null;
         this.state.data.forEach((data) => {
+            console.log(data.user, ' vs ', this.state.name);
             if (data.user == this.state.name) {
                 objIdToDelete = data._id;
             }
@@ -57,7 +63,7 @@ class Users extends React.Component {
         });
     }
 
-    getDataFromDb = (callback) => {
+    getDataFromDb = (callback, exitCallback) => {
         fetch('http://localhost:3001/sappo/getData')
             .then((data) => data.json())
             .then((res) => {
@@ -65,17 +71,26 @@ class Users extends React.Component {
                 res.data.map(item => {
                     usernames.push(item.user);
                 });
-                if (callback) {
-                    //First-ever call to surrounding function. Ensuring this.state.users is set
-                    //before generating a username that doesnt already exist in this state value.
-                    this.setState({users: usernames}, () => {
-                        this.setRemainingStates();
+                console.log('exit call back check ', exitCallback);
+                if (exitCallback) {
+                    this.setState({data: res.data}, () => {
+                        this.exit();
                     });
                 } else {
-                    //Used for further interval calls of surrounding function. After first-ever function call.
-                    this.setState({users: usernames});
+                    if (callback) {
+                        //First-ever call to surrounding function. Ensuring this.state.users is set
+                        //before generating a username that doesnt already exist in this state value.
+                        this.setState({users: usernames}, () => {
+                            this.setRemainingStates();
+                        });
+                    } else {
+                        //Used for further interval calls of surrounding function. After first-ever function call.
+                        this.setState({users: usernames});
+                    }
+                    this.setState({data: res.data}, () => {
+                        return true;
+                    });
                 }
-                this.setState({data: res.data});
             });
     };
 
@@ -110,10 +125,10 @@ class Users extends React.Component {
             <Jumbotron  id="centred">
                 {!this.state.exitChat ?
                     this.state.showChat
-                            ? <div>
+                            ? <div id="fill">
                                 <MessageList socket={this.props.socket}></MessageList>
                                 <ChatBox socket={this.props.socket} name={this.state.name} allUsers={this.state.data}></ChatBox>
-                                <button className="button-exit" onClick={this.exitChat}>Exit Chatroom</button>
+                                <Button variant="danger" className="button-exit" onClick={this.exitChat}>Exit Chatroom</Button>
                             </div>
                             : this.state.fetched ?
                                 <div  id="centred">
@@ -125,14 +140,14 @@ class Users extends React.Component {
                                     {this.state.name ?
                                         <div className="username">
                                             <p>{this.state.name}</p>
-                                            <button onClick={this.showChat} className="chatroom-button">Enter Chatroom!</button>
+                                            <Button variant="success" onClick={this.showChat} className="chatroom-button">Enter Chatroom!</Button>
                                         </div>
                                         : <p className="users-text">"name not gathered yet"</p>}
                                 </div>
                                 : <div>fetching names</div>
                 :
                 <div>
-                    You exited the chat. Come back soon!
+                    <h4>You exited the chat. Come back soon!</h4>
                 </div>
 
                 }
