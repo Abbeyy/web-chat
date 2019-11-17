@@ -35,6 +35,14 @@ The app is built, ready for production, and placed into the 'build' folder.
 This command runs the applications tests and lets you view the outcome in the command line.
 
 ## Justification
+Create-react-app:<br/>
+I used CRA because it is a boilerplate/scaffolding of code to get you off the ground quickly. This assessment has allowed me to produce a small prototype of an application fulfilling pre-defined requirements, 
+and CRA has enabled me to achieve this within a short, set time-limit. It comes with pre-defined dependencies which save me time exploring what I need and installing what I want before I can even create a functioning web application.
+It is also very easy to manipulate, so it does not take long before the application starts to become what you want it to be. 
+<br/>
+<br/>
+If I was creating a product for commercial release - not a prototype, I would choose to create my react app from the ground up without the use of a boilerplate. This would make my codebase far more lightweight as I would only include just what I needed for my application to function. This would become more important, the larger the application grows. In my case, it is not so, because my prototype is small.
+
 
 HTTP and Websocket:<br/>
 I use axios to preform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
@@ -44,6 +52,8 @@ However, I use JavaScript's 'fetch' instead of using an axios get request becaus
 I use axios to put new messages into the database. When a message is created, it does not have an _id or a time of creation. But when a message is put into the database, this information is generated.
 So, to update my components correctly with all this information, I would need to query the database and find the new message put into it, to then access the _id and time of creation, to then update state from the information the websocket receives, and so the component could rerender to show the new message.
 This is very long-winded and not efficient.
+<br/>
+<br/>
 Instead, I chose to re-use my existing method, getMessagesFromDB(), which queries the database for all messages (the new message has already been put in at this time),
 and uses the query results to update state and rerender the component - and does not use the new-message information passed to the socket.
 This is far more efficient and, as the user's of this chat may not have strong signals, more optimal solutions are key. (MessageList.js 18-25, ComponentDidMount())
@@ -52,21 +62,24 @@ Image / Multipart Content Type Messaging:<br/>
 I tried to implement the ability to send messages over the chat application and got as far as to receive the image data in the node server. However, given more time I would have liked to finish this feature.
 Given that this feature was incomplete by submission time, I decided to remove it by commenting out my code (showing what I did achieve) so that my end prototype had fully functioning features.
 
+### Tests
+
 Testing:<br/>
 I tried to implement Jest snapshot testing and created a file to identify whether the ChatBox component would render correctly. However, my test file failed and given more time I would have liked to explore this further so that my application can include snapshot tests and unit tests.
 Testing is important because, with an ever-expanding and increasingly-complicated codebase, it is vital to ensure parts worked on time ago still function logically as expected.
 
-## Usage
-
-
-## Tests
-
-
 ## Paradigms 
-
+In a sense, my React application is a type of object-oriented programming because each component I create and use is responsible for it's own data, and behaviour undertaken on such data.
+<br/>
+<br/>
+Peter Hunt speaks in a video found here: https://www.youtube.com/watch?v=x7cQ3mrcKaY&feature=youtu.be&t=2m44s [Accessed: 17th November 2019], about React's paradigm being 'Separation of Concerns'. I like this paradigm and have tried to employ it throughout this application because it focuses on reducing the dependency between components [Coupling], and instead ensuring that they belong together - that they should be related [Cohesion]. 
+<br/>
+My components do not rely on other's to have a certain state or propoerty, but instead react upon one another's state or data to influence their own properties.
 
 ## Styling
 I incorporated React-Bootstrap into my project because it allowed me to create an application with a continuous style: in terms of colour, shapes and positioning of components and their elements.
+<br/>
+<br/>
 I used my own CSS stylesheet on top of the Bootstrap dependency because it enabled me to show the dates and times of chat messages when the user hovers over the name of whoever sent said message.
 This cuts down on the amount of information shown on the UI at any one time, ensuring the interface is kept clear of jargon and specific information, but which data is easy to find when the user wants it.
 
