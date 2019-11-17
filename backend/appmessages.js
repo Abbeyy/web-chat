@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const MessagesSchema = new Schema(
     {
         user: String,
-        message: String,
+        message: String
+        // image:
+        //     { data: Buffer, contentType: String }
     },
     { timestamps: true }
 );

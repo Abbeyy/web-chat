@@ -10,11 +10,13 @@ class ChatBox extends React.Component {
         temperature: "",
         species: "",
         abundance: 0
+        // image: null
     }
 
     constructor(props) {
         super(props);
         this.handleOnChange = this.handleOnChange.bind(this);
+        // this.handleImageOnChange = this.handleImageOnChange.bind(this);
         this.handleMessageSubmit = this.handleMessageSubmit.bind(this);
         this.state.name = this.props.name;
     }
@@ -23,11 +25,14 @@ class ChatBox extends React.Component {
         this.setState({[e.target.id]: e.target.value});
     };
 
+    handleImageOnChange(e) {
+        this.setState({[e.target.id]: e.target.files[0]}); //will only be 1 upload
+    };
+
     handleMessageSubmit(e) {
         e.preventDefault();
 
         let sendM = this.sendMessage;
-        // let self = this;
 
         axios.post('http://localhost:3001/sappo/putMessage', {
             user: this.state.name,
@@ -64,6 +69,7 @@ class ChatBox extends React.Component {
                 temperature: this.state.temperature,
                 species: this.state.species,
                 abundance: this.state.abundance
+                // image: this.state.image
         });
     };
 
@@ -86,6 +92,8 @@ class ChatBox extends React.Component {
                             <br/>
                             <input onChange={this.handleOnChange} value={this.state.abundance} type="text" placeholder="Quantity of ..." id="abundance"></input>
                             <br/>
+                            {/*<input onChange={this.handleImageOnChange} type="file" id="image" accept="image/png"></input>*/}
+                            {/*<br/>*/}
                             <button type="submit" className="button-send">Send!</button>
                         </form>
                     </div>

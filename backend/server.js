@@ -9,6 +9,12 @@ const MessageData = require('./appmessages');
 const ResearchData = require('./appresearch');
 //Other
 const bodyParser = require('body-parser');
+const path = require("path");
+// const multer = require("multer");
+// const upload = multer({ storage: storage });
+// const fs = require('fs');
+// const uuidv4 = require('uuid/v4');
+
 
 //Constant declarations
 const API_PORT = 3001;
@@ -27,6 +33,31 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+//Readying image upload equipment
+// const DIR = './public/';
+//
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, DIR);
+//     },
+//     filename: (req, file, cb) => {
+//         const fileName = file.originalname.toLowerCase().split(' ').join('-');
+//         cb(null, uuidv4() + '-' + fileName)
+//     }
+// });
+//
+// const upload = multer({
+//     storage: storage,
+//     fileFilter: (req, file, cb) => {
+//         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+//             cb(null, true);
+//         } else {
+//             cb(null, false);
+//             return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+//         }
+//     }
+// });
 
 //Routes to database activity for Users Schema
 router.get('/getData', (req, res) => {
@@ -71,6 +102,7 @@ router.post('/putData', (req, res) => {
     });
 });
 
+
 //Routes to database activity for Messages Schema
 router.get('/getMessages', (req, res) => {
     MessageData.find((err, data) => {
@@ -93,6 +125,7 @@ router.post('/putMessage', (req, res) => {
 
     msgData.user = user;
     msgData.message = message;
+
     msgData.save((err) => {
             if (err) return res.json({ success: false, error: err });
             return res.json({ success: true });

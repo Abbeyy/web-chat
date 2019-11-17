@@ -22,8 +22,10 @@ describe('ChatBox', () => {
                 user: "dvvv7",
                 __v: 0,
                 _id: "5dc2b8c7cd4c3e1f18bb1fdc"}
-    };
-        const component = renderer.create(<ChatBox socket={socket} name={'Andrea'} allUsers={allUsers}/>);
+        };
+        const component = renderer.create(
+            <ChatBox socket={socket} name={'Andrea'} allUsers={allUsers}/>
+            );
         let tree = component.toJSON();
         expect(tree).toMatchSnapshot();
     })

@@ -42,6 +42,10 @@ class MessageList extends React.Component {
                                     <span id="tooltip-datetime">{item.createdAt}</span>
                                     {item.message}
                                 </p>
+                            {!item.image ?
+                            <span></span> :
+                                <img className="rotate90" alt="Research image" height="75" width="90" src={item.image} />
+                            }
                         </ListGroupItem>
                     );
                 });
@@ -49,7 +53,8 @@ class MessageList extends React.Component {
                     return {_id: item._id,
                     user: item.user,
                     createdAt: item.createdAt,
-                    message: item.message};
+                    message: item.message,
+                    image: item.image};
                 });
                 this.setState({messages: listItems});
                 this.setState({data: data});

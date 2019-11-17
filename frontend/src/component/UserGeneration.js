@@ -92,7 +92,6 @@ class Users extends React.Component {
                     this.setState({users: usernames});
                 }
                 this.setState({data: res.data});
-                console.log(res.data);
             });
     };
 
