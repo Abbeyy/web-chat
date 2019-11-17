@@ -61,11 +61,15 @@ I tried to implement Jest snapshot testing and created a file to identify whethe
 Testing is important because, with an ever-expanding and increasingly-complicated codebase, it is vital to ensure parts worked on time ago still function logically as expected.
 <br/>
 <br/>
-Despite this set back, I am going to explain why I wanted to use JEST with my application.
+If you wish to test with my application, please run the following on the command-line:
+npm run test:watch
+<br/>
+<br/>
+Despite the set back I've explained above, I am going to explain why I wanted to use JEST with my application.
 1. Jest is a fast testing framework. As explained by Sayfan, who says that it 'runs the slowest tests first'. (Sayfan, G. 2018. https://code.tutsplus.com/tutorials/8-things-that-make-jest-the-best-react-testing-framework--cms-30534 [Accessed: 17th November, 2019]). As my application is a small prototype, I don't have the time to wait for tests to complete because I am a one-person team with a strict-deadline that I must meet.
 2. Jest is an extensible framework. Tal explains that Jest has a large range of matchers which cut down on code themselves and make your own codebase far more readable and thus more easily maintainable.  (Tal, L. 2018. https://medium.com/@liran.tal/reasons-to-love-jest-the-test-framework-ae19b49c02c3 [Accessed: 15th December, 2019]). This is important because it makes my own small prototype application able to be further condensed, especially since I've created it with a broad boilerplate (create react app). It also means that, as my application could extend, testing should become no more complex and test files should remain easily understandable and relatively small. 
 
-## Paradigms 
+### Paradigms 
 In a sense, my React application is a type of object-oriented programming because each component I create and use is responsible for it's own data, and behaviour undertaken on such data.
 <br/>
 <br/>
@@ -73,7 +77,7 @@ Peter Hunt speaks in a video found here: https://www.youtube.com/watch?v=x7cQ3mr
 <br/>
 My components do not rely on other's to have a certain state or propoerty, but instead react upon one another's state or data to influence their own properties.
 
-## Styling
+### Styling
 I incorporated React-Bootstrap into my project because it allowed me to create an application with a continuous style: in terms of colour, shapes and positioning of components and their elements.
 <br/>
 <br/>
