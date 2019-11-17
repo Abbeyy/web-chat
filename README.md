@@ -25,17 +25,22 @@ cd ..
 Ensure you are sat within your sappo folder. Open up a command terminal here.
 
 ### npm start
+The frontend and backend of this application run concurrently when this command is used. You may choose to run them separately.
+Go to http://localhost:3000 to view the app.
 
 ### npm run build
+The app is built, ready for production, and placed into the 'build' folder.
 
-### npm test
+### npm run test:watch
+This command runs the applications tests and lets you view the outcome in the command line.
 
 ## Justification
 
-HTTP and Websocket:
+HTTP and Websocket:<br/>
 I use axios to preform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
 However, I use JavaScript's 'fetch' instead of using an axios get request because, although axios unpacks the response for me, fetch allows me to use a callback passed to the overall function (see UserGeneration.js 76-95, getDataFromDB). And so, for fluidity, whereever else I may have used an axios.get, I instead use fetch.
-
+<br/>
+<br/>
 I use axios to put new messages into the database. When a message is created, it does not have an _id or a time of creation. But when a message is put into the database, this information is generated.
 So, to update my components correctly with all this information, I would need to query the database and find the new message put into it, to then access the _id and time of creation, to then update state from the information the websocket receives, and so the component could rerender to show the new message.
 This is very long-winded and not efficient.
@@ -43,10 +48,27 @@ Instead, I chose to re-use my existing method, getMessagesFromDB(), which querie
 and uses the query results to update state and rerender the component - and does not use the new-message information passed to the socket.
 This is far more efficient and, as the user's of this chat may not have strong signals, more optimal solutions are key. (MessageList.js 18-25, ComponentDidMount())
 
+Image / Multipart Content Type Messaging:<br/>
+I tried to implement the ability to send messages over the chat application and got as far as to receive the image data in the node server. However, given more time I would have liked to finish this feature.
+Given that this feature was incomplete by submission time, I decided to remove it by commenting out my code (showing what I did achieve) so that my end prototype had fully functioning features.
+
+Testing:<br/>
+I tried to implement Jest snapshot testing and created a file to identify whether the ChatBox component would render correctly. However, my test file failed and given more time I would have liked to explore this further so that my application can include snapshot tests and unit tests.
+Testing is important because, with an ever-expanding and increasingly-complicated codebase, it is vital to ensure parts worked on time ago still function logically as expected.
+
 ## Usage
 
 
 ## Tests
+
+
+## Paradigms 
+
+
+## Styling
+I incorporated React-Bootstrap into my project because it allowed me to create an application with a continuous style: in terms of colour, shapes and positioning of components and their elements.
+I used my own CSS stylesheet on top of the Bootstrap dependency because it enabled me to show the dates and times of chat messages when the user hovers over the name of whoever sent said message.
+This cuts down on the amount of information shown on the UI at any one time, ensuring the interface is kept clear of jargon and specific information, but which data is easy to find when the user wants it.
 
 ## License
 [MIT License]
@@ -58,46 +80,3 @@ This is far more efficient and, as the user's of this chat may not have strong s
 • details of any aspects you have mocked
 • explanation of any paradigms used
 • justification for styling of application
-
-
-
-
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-
