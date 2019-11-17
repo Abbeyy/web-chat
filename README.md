@@ -33,7 +33,7 @@ The app is built, ready for production, and placed into the 'build' folder.
 This command runs the applications tests and lets you view the outcome in the command line.
 
 ## Justification
-Create-react-app:<br/>
+### Create-react-app:
 I used CRA because it is a boilerplate/scaffolding of code to get you off the ground quickly. This assessment has allowed me to produce a small prototype of an application fulfilling pre-defined requirements, 
 and CRA has enabled me to achieve this within a short, set time-limit. It comes with pre-defined dependencies which save me time exploring what I need and installing what I want before I can even create a functioning web application.
 It is also very easy to manipulate, so it does not take long before the application starts to become what you want it to be. 
@@ -42,7 +42,7 @@ It is also very easy to manipulate, so it does not take long before the applicat
 If I was creating a product for commercial release - not a prototype, I would choose to create my react app from the ground up without the use of a boilerplate. This would make my codebase far more lightweight as I would only include just what I needed for my application to function. This would become more important, the larger the application grows. In my case, it is not so, because my prototype is small.
 
 
-HTTP and Websocket:<br/>
+### HTTP and Websocket:
 I use axios to perform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
 However, I use JavaScript's 'fetch' instead of using an axios get request because, although axios unpacks the response for me, fetch allows me to use a callback passed to the overall function (see UserGeneration.js 76-95, getDataFromDB). And so, for fluidity, whereever else I may have used an axios.get, I instead use fetch.
 <br/>
@@ -52,15 +52,18 @@ I do this because the alternative would be far more complex: when messages are d
 then re-query the database for all messages, to then update the React component for my client - and then trigger a message on the web socket to update this change for all other clients. This is very inefficient and illogical. Hence, I chose the former implementation.
 <br/>
 <br/>
-Image / Multipart Content Type Messaging:<br/>
+### Image / Multipart Content Type Messaging:
 I tried to implement the ability to send messages over the chat application and got as far as to receive the image data in the node server. However, given more time I would have liked to finish this feature.
 Given that this feature was incomplete by submission time, I decided to remove it by commenting out my code (showing what I did achieve) so that my end prototype had fully functioning features.
 
-### Tests
-
-Testing:<br/>
+### Tests:
 I tried to implement Jest snapshot testing and created a file to identify whether the ChatBox component would render correctly. However, my test file failed and given more time I would have liked to explore this further so that my application can include snapshot tests and unit tests.
 Testing is important because, with an ever-expanding and increasingly-complicated codebase, it is vital to ensure parts worked on time ago still function logically as expected.
+<br/>
+<br/>
+Despite this set back, I am going to explain why I wanted to use JEST with my application.
+1. Jest is a fast testing framework. As explained by Sayfan, who says that it 'runs the slowest tests first'. (Sayfan, G. 2018. https://code.tutsplus.com/tutorials/8-things-that-make-jest-the-best-react-testing-framework--cms-30534 [Accessed: 17th November, 2019]). As my application is a small prototype, I don't have the time to wait for tests to complete because I am a one-person team with a strict-deadline that I must meet.
+2. Jest is an extensible framework. Tal explains that Jest has a large range of matchers which cut down on code themselves and make your own codebase far more readable and thus more easily maintainable.  (Tal, L. 2018. https://medium.com/@liran.tal/reasons-to-love-jest-the-test-framework-ae19b49c02c3 [Accessed: 15th December, 2019]). This is important because it makes my own small prototype application able to be further condensed, especially since I've created it with a broad boilerplate (create react app). It also means that, as my application could extend, testing should become no more complex and test files should remain easily understandable and relatively small. 
 
 ## Paradigms 
 In a sense, my React application is a type of object-oriented programming because each component I create and use is responsible for it's own data, and behaviour undertaken on such data.
