@@ -10,8 +10,7 @@ Or clone with the following:
 HTTP: https://gitlab.cs.cf.ac.uk/c1714546/sappo.git
 SSH: git@gitlab.cs.cf.ac.uk:c1714546/sappo.git
 
-Next, install dependencies. 
-cd sappo
+Next, enter into your projects root folder and install dependencies. 
 npm install
 cd frontend
 npm install
@@ -22,7 +21,7 @@ cd ..
 
 ## Scripts
 
-Ensure you are sat within your sappo folder. Open up a command terminal here.
+Ensure you are sat within your project's root folder (for example, this might be called sappo or sappo-master). Open up a command terminal here.
 
 ### npm start
 The frontend and backend of this application run concurrently when this command is used. You may choose to run them separately.
