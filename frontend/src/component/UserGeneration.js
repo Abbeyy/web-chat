@@ -17,7 +17,6 @@ class Users extends React.Component {
         users: null, //get existing users from db,
         name: null,
         showChat: false,
-        intervalIsSet: false,
         data: null
     };
 
@@ -30,20 +29,6 @@ class Users extends React.Component {
     componentDidMount() {
         //get users from database.
         this.getDataFromDb(true);
-        //If interval isnt set, do so to keep gathering names if new users join.
-        if (!this.state.intervalIsSet) {
-            let interval = setInterval(this.getDataFromDb, 1000);
-            this.setState({ intervalIsSet: interval });
-        }
-
-    }
-
-    componentWillUnmount() {
-        //If interval exists, clear it.
-        if (this.state.intervalIsSet) {
-            clearInterval(this.state.intervalIsSet);
-            this.setState({ intervalIsSet: false });
-        }
     }
 
     exitChat = () => {
