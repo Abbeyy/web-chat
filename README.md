@@ -45,19 +45,15 @@ If I was creating a product for commercial release - not a prototype, I would ch
 
 
 HTTP and Websocket:<br/>
-I use axios to preform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
+I use axios to perform ajax requests because it leads to cleaner code: the code axios allows me to produce is more concise and easily understandable. There is less of it, and so less chance I make mistakes when editing it because there is less to go wrong.
 However, I use JavaScript's 'fetch' instead of using an axios get request because, although axios unpacks the response for me, fetch allows me to use a callback passed to the overall function (see UserGeneration.js 76-95, getDataFromDB). And so, for fluidity, whereever else I may have used an axios.get, I instead use fetch.
 <br/>
 <br/>
-I use axios to put new messages into the database. When a message is created, it does not have an _id or a time of creation. But when a message is put into the database, this information is generated.
-So, to update my components correctly with all this information, I would need to query the database and find the new message put into it, to then access the _id and time of creation, to then update state from the information the websocket receives, and so the component could rerender to show the new message.
-This is very long-winded and not efficient.
+I use axios to put a new client's message into the database. Then, my websocket is triggered with a message, via the socket.io library, and this is received by my server. Then, it is my server's duty to re-gather all messages from the database and rerender the app's components with this new data for all clients.
+I do this because the alternative would be far more complex: when messages are displayed, they need an _id and a time of creation - but this data is only generated once the record is placed into the database. So, I would have to put the message in the database, 
+then re-query the database for all messages, to then update the React component for my client - and then trigger a message on the web socket to update this change for all other clients. This is very inefficient and illogical. Hence, I chose the former implementation.
 <br/>
 <br/>
-Instead, I chose to re-use my existing method, getMessagesFromDB(), which queries the database for all messages (the new message has already been put in at this time),
-and uses the query results to update state and rerender the component - and does not use the new-message information passed to the socket.
-This is far more efficient and, as the user's of this chat may not have strong signals, more optimal solutions are key. (MessageList.js 18-25, ComponentDidMount())
-
 Image / Multipart Content Type Messaging:<br/>
 I tried to implement the ability to send messages over the chat application and got as far as to receive the image data in the node server. However, given more time I would have liked to finish this feature.
 Given that this feature was incomplete by submission time, I decided to remove it by commenting out my code (showing what I did achieve) so that my end prototype had fully functioning features.
