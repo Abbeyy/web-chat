@@ -1,37 +1,65 @@
+//Gather mongoose and express
 const mongoose = require('mongoose');
 const express = require('express');
+//Gather cors
 let cors = require('cors');
-const bodyParser = require('body-parser');
-// const logger = require('morgan');
+//Gather schemas
 const AppData = require('./appdata');
+const MessageData = require('./appmessages');
+const ResearchData = require('./appresearch');
+//Other
+const bodyParser = require('body-parser');
+const path = require("path");
+// const multer = require("multer");
+// const upload = multer({ storage: storage });
+// const fs = require('fs');
+// const uuidv4 = require('uuid/v4');
 
+
+//Constant declarations
 const API_PORT = 3001;
 const app = express();
 app.use(cors());
 const router = express.Router();
 
-// this is our MongoDB database
+//Database connection
 const dbRoute =
     'mongodb+srv://admin:admin@cluster0-ydzqo.mongodb.net/test?retryWrites=true&w=majority';
-
-// connects our back end code with the database
 mongoose.connect(dbRoute, { useNewUrlParser: true });
 
 let db = mongoose.connection;
-
 db.once('open', () => console.log('connected to the database'));
-
-// checks if connection with the database is successful
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-// app.use(logger('dev'));
 
-// this is our get method
-// this method fetches all available data in our database
+//Readying image upload equipment
+// const DIR = './public/';
+//
+// const storage = multer.diskStorage({
+//     destination: (req, file, cb) => {
+//         cb(null, DIR);
+//     },
+//     filename: (req, file, cb) => {
+//         const fileName = file.originalname.toLowerCase().split(' ').join('-');
+//         cb(null, uuidv4() + '-' + fileName)
+//     }
+// });
+//
+// const upload = multer({
+//     storage: storage,
+//     fileFilter: (req, file, cb) => {
+//         if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+//             cb(null, true);
+//         } else {
+//             cb(null, false);
+//             return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+//         }
+//     }
+// });
+
+//Routes to database activity for Users Schema
 router.get('/getData', (req, res) => {
     AppData.find((err, data) => {
         if (err) return res.json({ success: false, error: err });
@@ -39,8 +67,6 @@ router.get('/getData', (req, res) => {
     });
 });
 
-// this is our update method
-// this method overwrites existing data in our database
 router.post('/updateData', (req, res) => {
     const { id, update } = req.body;
     AppData.findByIdAndUpdate(id, update, (err) => {
@@ -49,8 +75,6 @@ router.post('/updateData', (req, res) => {
     });
 });
 
-// this is our delete method
-// this method removes existing data in our database
 router.delete('/deleteData', (req, res) => {
     const { id } = req.body;
     AppData.findByIdAndRemove(id, (err) => {
@@ -59,29 +83,125 @@ router.delete('/deleteData', (req, res) => {
     });
 });
 
-// this is our create methid
-// this method adds new data in our database
 router.post('/putData', (req, res) => {
-    let data = new Data();
+    let data = new AppData();
 
-    const { id, user } = req.body;
+    const { user } = req.body;
 
-    if ((!id && id !== 0) || !user) {
+    if (!user) {
         return res.json({
             success: false,
             error: 'INVALID INPUTS',
         });
     }
+
     data.user = user;
-    data.id = id;
     data.save((err) => {
         if (err) return res.json({ success: false, error: err });
         return res.json({ success: true });
     });
 });
 
-// append /api for our http requests
-app.use('/api', router);
+
+//Routes to database activity for Messages Schema
+router.get('/getMessages', (req, res) => {
+    MessageData.find((err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true, data: data });
+    });
+});
+
+router.post('/putMessage', (req, res) => {
+    let msgData = new MessageData();
+
+    const { user, message } = req.body;
+
+    if (!user || !message) {
+        return res.json({
+            success: false,
+            error: 'INVALID INPUTS',
+        });
+    }
+
+    msgData.user = user;
+    msgData.message = message;
+
+    msgData.save((err) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json({ success: true });
+        });
+});
+
+//Routes to database activity for Research Schema
+router.get('/getResearch', (req, res) => {
+    ResearchData.find((err, data) => {
+        if (err) return res.json({ success: false, error: err });
+        return res.json({ success: true, data: data });
+    });
+});
+
+router.post('/putResearch', (req, res) => {
+    let researchData = new ResearchData();
+
+    const { user, coordinates, temperature, abundance, species} = req.body;
+
+    let count = 0;
+    researchData.user = user;
+    if (coordinates) {
+        researchData.coordinates = coordinates;
+        count++;
+    }
+    if (temperature) {
+        researchData.temperature = temperature;
+        count++;
+    }
+    if (abundance) {
+        researchData.abundance = abundance;
+        count++;
+    }
+    if (species) {
+        researchData.species = species;
+        count++;
+    }
+    if (count > 0) {
+        researchData.save((err) => {
+            if (err) return res.json({ success: false, error: err });
+            return res.json({ success: true });
+        });
+    }
+});
+
+
+app.use('/sappo', router);
 
 // launch our backend into a port
-app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+let http = require('http');
+const server = new http.Server(app);
+
+//websocket:
+const socketIO = require('socket.io');
+const io = socketIO(server);
+
+server.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
+
+// let allClients = [];
+io.on('connection', socket => {
+    // allClients.push(socket);
+    console.log('New client connected');
+
+    socket.on('change colour', (color) => {
+        console.log('Color Changed to: ', color);
+        io.sockets.emit('change color', color);
+    });
+
+    socket.on('new message', (msg) => {
+        console.log('New msg is: ', msg);
+        io.sockets.emit('new message', msg);
+    });
+
+    socket.on('disconnect', () => {
+        console.log('user disconnected');
+        // let pos = allClients.indexOf(socket);
+        // allClients.splice(pos, 1);
+    })
+});

@@ -1,0 +1,121 @@
+/*Basic html css*/
+body {
+    font-family: Helvetica,Arial,freesans,sans-serif;
+    font-size: 95%;
+    max-width: 100%;
+    display: block;
+    margin: 0px !important;
+}
+
+root {
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    display: block;
+}
+
+#centered {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fill {
+    display: flex;
+    flex-direction: column;
+}
+
+/*App.js css*/
+
+.page {
+    width: auto;
+    height: 100%;
+    overflow: auto;
+    display: block;
+}
+
+/*TitleBar.js css*/
+
+.rotate90 {
+    transform: rotate(90deg);
+    height: 100px;
+    width: 130px;
+}
+
+.navbar {
+    background-color: #4CAF50;
+    height: 150px;
+}
+
+/*id overtakes React\'s bootstrap*/
+#title-text {
+    color: white;
+}
+
+/*UserGeneration.js css*/
+#users-list {
+    list-style: none;
+}
+
+#users {
+    padding: 5px;
+}
+
+
+/*ChatBox.js css*/
+
+.messages {
+/*    background-color: white;*/
+    text-align: center;
+    vertical-align: middle;
+    align-items: center;
+/*    border: 25px solid #4CAF50;*/
+}
+
+.messages-container {
+    background-color: white;
+    text-align: center;
+    height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+/*MessageList.js css*/
+
+.chat-title {
+    float: left;
+    color: black;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 45px;
+}
+
+.list-group-item p {
+    font-size: 16px;
+}
+
+#tooltip {
+    width: 175px;
+    position: relative;
+    font-size: 16px;
+}
+
+#tooltip #tooltip-datetime {
+    visibility: hidden;
+    width: 175px;
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 1;
+    top: -5px;
+    left: 105%;
+}
+
+#tooltip:hover #tooltip-datetime {
+    visibility: visible;
+}
