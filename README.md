@@ -10,6 +10,7 @@ HTTP: https://gitlab.cs.cf.ac.uk/c1714546/sappo.git
 SSH: git@gitlab.cs.cf.ac.uk:c1714546/sappo.git
 
 Next, enter into your projects root folder and install dependencies. 
+
 npm install
 cd frontend
 npm install
